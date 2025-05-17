@@ -1,0 +1,32 @@
+# Use an official Gradle image with JDK
+FROM gradle:8.14.0-jdk17 AS builder
+
+# Set the working directory
+WORKDIR /app
+
+# Cache dependencies by copying only the gradle wrapper and build files
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle.kts .
+COPY settings.gradle.kts .
+
+# Download dependencies
+RUN ./gradlew build --no-daemon || return 0
+
+# Copy the remaining project files
+COPY . .
+
+# Build the application
+RUN ./gradlew build --no-daemon
+
+# Use a lightweight JDK image to run the app
+FROM eclipse-temurin:17-jdk-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built jar from the builder stage
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+# Command to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
