@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.postgres.jdbc)
     implementation(libs.kache.kache)
+    implementation(libs.sqids.sqids)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
