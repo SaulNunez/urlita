@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.ktor.server.redirect)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.postgres.jdbc)
