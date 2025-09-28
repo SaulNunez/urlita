@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Link Shortener</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Foundation CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css">
+</head>
+<body>
+
+<div class="grid-container">
+    <div class="grid-x grid-padding-x align-center-middle" style="min-height:100vh;">
+        <div class="cell medium-6 large-4">
+            <h2 class="text-center">Link Shortener</h2>
+
+            <!-- Form -->
+            <form id="shortenForm">
+                <label for="url">
+                    Enter a URL to shorten:
+                    <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                </label>
+                <button type="submit" class="button expanded">Shorten Link</button>
+            </form>
+
+            <!-- Result Section (hidden by default) -->
+            <div id="resultBox" class="callout success text-center" style="margin-top: 1rem; display:none;">
+                <p>Your shortened link:</p>
+                <p><a id="shortUrl" href="#" target="_blank"></a></p>
+            </div>
+
+            <!-- Error Section (hidden by default) -->
+            <div id="errorBox" class="callout alert text-center" style="margin-top: 1rem; display:none;">
+                <p id="errorMessage"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Foundation JS -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+
+    document.getElementById('shortenForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const urlToShorten = document.getElementById('url').value;
+
+      // Hide old messages
+      document.getElementById('resultBox').style.display = 'none';
+      document.getElementById('errorBox').style.display = 'none';
+
+      try {
+        const response = await fetch(window.location.href, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ url: urlToShorten })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.short_url) {
+          const linkElement = document.getElementById('shortUrl');
+          linkElement.textContent = data.short_url;
+          linkElement.href = data.short_url;
+
+          document.getElementById('resultBox').style.display = 'block';
+        } else {
+          throw new Error("No short_url field in response");
+        }
+      } catch (err) {
+        document.getElementById('errorMessage').textContent = err.message;
+        document.getElementById('errorBox').style.display = 'block';
+      }
+    });
+</script>
+</body>
+</html>
