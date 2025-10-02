@@ -1,9 +1,8 @@
 package Models
 
 import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.UUIDTable
 
-object UrlInformation: Table("Urls") {
-    val id = integer("id").autoIncrement()
+object UrlInformation: UUIDTable("Urls") {
     val originalUrl =  varchar("original_url", 2000)
-    val slug = varchar("slug", 10)
 }

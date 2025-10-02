@@ -6,6 +6,7 @@ import com.mayakapps.kache.KacheStrategy
 import com.saulnunez.Models.UrlInformationDao
 import com.saulnunez.Models.UrlShortenInput
 import com.saulnunez.SlugGeneration
+import java.util.UUID
 
 class UrlService(private val repository: UrlRepository) {
     private val cache = InMemoryKache<String, UrlInformationDao>(maxSize= 1000) {
@@ -14,7 +15,8 @@ class UrlService(private val repository: UrlRepository) {
 
     suspend fun getUrlBySlug(slug: String): UrlInformationDao {
         val cached = cache.getOrPut(slug) {
-            val dbRecord = repository.getUrlBySlug(slug)
+            val id = SlugGeneration.decodeSlug(slug).toUUID()
+            val dbRecord = repository.getMappingById(id)
 
             if (dbRecord == null)
             {
@@ -32,10 +34,19 @@ class UrlService(private val repository: UrlRepository) {
     }
 
     fun addNewUrlMapping(input: UrlShortenInput): UrlInformationDao {
-        val slug = SlugGeneration.generateSlug(input.url)
+        val id = repository.addNewMapping(input.url).value
 
-        repository.addNewMapping(input.url, slug)
+        val slug = SlugGeneration.generateSlug(id.toByteArray().toList())
 
         return UrlInformationDao(slug, input.url)
     }
+}
+
+private fun UUID.toByteArray(): List<Long> {
+    return listOf(this.mostSignificantBits, this.leastSignificantBits)
+}
+
+private fun List<Long>.toUUID(list: List<Long>): UUID {
+    if (list.size != 2) throw Exception("List is too long or too short")
+    return UUID(list[0], list[1])
 }

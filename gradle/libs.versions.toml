@@ -20,7 +20,7 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 postgres-jdbc = { module = "org.postgresql:postgresql", version.ref = "postgres"}
 kache-kache = { module = "com.mayakapps.kache:kache", version.ref = "kache" }
-sqids-sqids = { module = "org.sqids:sqids-kotlin", version.ref = "sqids"}
+sqids = { module = "org.sqids:sqids-kotlin", version.ref = "sqids"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
