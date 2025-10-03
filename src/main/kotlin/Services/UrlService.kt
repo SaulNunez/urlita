@@ -46,7 +46,7 @@ private fun UUID.toByteArray(): List<Long> {
     return listOf(this.mostSignificantBits, this.leastSignificantBits)
 }
 
-private fun List<Long>.toUUID(list: List<Long>): UUID {
-    if (list.size != 2) throw Exception("List is too long or too short")
-    return UUID(list[0], list[1])
+private fun List<Long>.toUUID(): UUID {
+    if (this.size != 2) throw Exception("List is too long or too short")
+    return UUID(this[0], this[1])
 }
