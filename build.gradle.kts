@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
+    alias(libs.plugins.serialization)
 }
 
 group = "com.saulnunez"
@@ -28,6 +29,7 @@ dependencies {
     implementation(libs.ktor.server.redirect)
     implementation(libs.ktor.server.cn)
     implementation(libs.ktor.server.serialization)
+    implementation(libs.ktor.server.logging)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.postgres.jdbc)
