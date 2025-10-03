@@ -1,5 +1,5 @@
 # Use an official Gradle image with JDK
-FROM gradle:8.14.0-jdk17 AS builder
+FROM gradle:8.14.0-jdk21 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY . .
 RUN ./gradlew build --no-daemon
 
 # Use a lightweight JDK image to run the app
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 
 # Set the working directory
 WORKDIR /app
