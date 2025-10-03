@@ -1,6 +1,7 @@
 package com.saulnunez
 
 import Repository.UrlRepository
+import com.saulnunez.DatasourceFactory.dataSource
 import com.saulnunez.Models.UrlShortenInput
 import com.saulnunez.Services.UrlService
 import io.ktor.http.HttpStatusCode
@@ -12,7 +13,9 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.SerializationException
 import org.jetbrains.exposed.v1.jdbc.Database
 
-val database = Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+val database = Database.connect(
+    datasource = dataSource,
+)
 val repository = UrlRepository(database)
 val service = UrlService(repository)
 

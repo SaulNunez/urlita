@@ -26,8 +26,8 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.postgres.jdbc)
     implementation(libs.kache.kache)
-    //implementation(libs.sqids)
-    implementation("org.sqids:sqids-kotlin:0.1.1")
+    implementation(libs.sqids)
+    implementation(libs.zaxxer.hikari)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }

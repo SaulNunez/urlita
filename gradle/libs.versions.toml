@@ -7,6 +7,7 @@ exposed = "1.0.0-rc-1"
 postgres = "42.7.8"
 kache = "2.1.1"
 sqids = "0.1.1"
+hikari-version = "7.0.2"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -21,6 +22,7 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 postgres-jdbc = { module = "org.postgresql:postgresql", version.ref = "postgres"}
 kache-kache = { module = "com.mayakapps.kache:kache", version.ref = "kache" }
 sqids = { module = "org.sqids:sqids-kotlin", version.ref = "sqids"}
+zaxxer-hikari = { module = "com.zaxxer:HikariCP", version.ref="hikari-version"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
